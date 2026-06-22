@@ -1,6 +1,6 @@
 /* ============================================================
    LIBROS BLUE — app.js
-   Carga datos desde data/libros.json y construye toda la UI.
+   Carga datos desde libros.json y construye toda la UI.
    ============================================================ */
 
 const state = {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', init);
 
 async function init(){
   try{
-    const res = await fetch('data/libros.json');
+    const res = await fetch('libros.json');
     if(!res.ok) throw new Error('respuesta no OK');
     const data = await res.json();
     state.libros = data.catalogo;
@@ -22,14 +22,14 @@ async function init(){
     state.config = data.configuracion;
   }catch(err){
     // Si fetch falla (ej. abriendo el archivo localmente con file://),
-    // usamos el respaldo embebido cargado por data/libros.embedded.js
+    // usamos el respaldo embebido cargado por libros.embedded.js
     if(window.LIBROS_BLUE_DATA){
-      console.warn('fetch a data/libros.json falló, usando datos embebidos de respaldo.', err);
+      console.warn('fetch a libros.json falló, usando datos embebidos de respaldo.', err);
       state.libros = window.LIBROS_BLUE_DATA.catalogo;
       state.renta = window.LIBROS_BLUE_DATA.renta;
       state.config = window.LIBROS_BLUE_DATA.configuracion;
     }else{
-      console.error('No se pudo cargar data/libros.json y no hay respaldo embebido.', err);
+      console.error('No se pudo cargar libros.json y no hay respaldo embebido.', err);
       return;
     }
   }
